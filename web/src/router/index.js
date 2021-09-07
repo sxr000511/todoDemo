@@ -5,10 +5,11 @@ import Layouts from "../components/layouts"; // 导入layouts.vue 组件
 import todo from "../components/todo";
 import login from "../components/login";
 
-// const originalPush = Router.prototype.push;
-// Router.prototype.push = function push(location) {
-//   return originalPush.call(this, location).catch(err => err);
-// };
+// 不让重复路由
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
 
 //全局注册Router组件，它会绑定到Vue实例里面。
 Vue.use(Router);
@@ -19,7 +20,7 @@ const router = new Router({
       path: "/todo/login",
       name: "Login",
       component: login,
-      meta: { isPublic: true }
+      meta: { isPublic: true },
     },
     {
       path: "/todo",
@@ -31,11 +32,11 @@ const router = new Router({
           path: "/todo/:_id",
           name: "todo",
           component: todo,
-          props: true
-        }
-      ]
-    }
-  ]
+          props: true,
+        },
+      ],
+    },
+  ],
 });
 
 // 导航守卫

@@ -119,7 +119,7 @@ module.exports = (app) => {
     const isValid =
       get === {}
         ? false
-        : require("bcrypt").compareSync(password, get.password);
+        : require("bcryptjs").compareSync(password, get.password);
     if (isValid) {
       return res.send({ success: true });
     } else {
